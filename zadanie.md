@@ -13,7 +13,7 @@ System pozwala użytkownikom na rejestrowanie się, logowanie oraz zarządzanie 
 ## 3. Architektura
 +-----------------+                     +--------------------+
 |                 |                     |                    |
-|   User Service  | <----> (REST API)  |    Task Service    |
+|   User Service  | <----> (REST API)   |    Task Service    |
 |                 |                     |                    |
 +-----------------+                     +--------------------+
 |  - Rejestracja  |                     |   - Zadania        |
