@@ -1,6 +1,8 @@
 package com.makowski.user_service.service;
 
 import com.makowski.user_service.entity.User;
+import com.makowski.user_service.exceptions.InvalidRequestException;
+import com.makowski.user_service.exceptions.NoSuchUserException;
 import com.makowski.user_service.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,8 +19,7 @@ public class UserService {
 
     public User createUser(User user) {
         Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
-        if (existingUser.isPresent()) throw new RuntimeException();
-                //change exception!!!!
+        if (existingUser.isPresent()) throw new InvalidRequestException(user.getUsername());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
@@ -26,9 +27,6 @@ public class UserService {
     public User findByUsername(String username) {
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isPresent()) return user.get();
-        else throw new RuntimeException();
-                //change exception!!!!
+        else throw new NoSuchUserException();
     }
-
-
 }
