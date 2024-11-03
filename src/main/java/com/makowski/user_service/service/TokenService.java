@@ -17,8 +17,6 @@ public class TokenService {
     public String validateTokenGetUsername(String token) {
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(token);
-       // if (decodedJWT.getExpiresAt().before(new Date())) throw new JWTVerificationException("JWT has expired");
-            //TODO zmienic blad i obsluzyc oba
         return decodedJWT.getSubject();
     }
 }

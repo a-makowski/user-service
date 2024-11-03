@@ -1,5 +1,6 @@
 package com.makowski.user_service.exceptions;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import io.micrometer.common.lang.Nullable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,10 +31,10 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(WrongUserException.class)
-    public ResponseEntity<Object> handleWrongUserException(RuntimeException ex) {
+    @ExceptionHandler({TokenExpiredException.class, IllegalArgumentException.class})
+    public ResponseEntity<Object> handleTokenExpiredException(RuntimeException ex) {
         ErrorResponse error = new ErrorResponse(Arrays.asList(ex.getMessage()));
-        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
 
     @Override
