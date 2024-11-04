@@ -19,4 +19,10 @@ public class UserController {
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<HttpStatus> deleteUser() {
+        userService.deleteUser();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

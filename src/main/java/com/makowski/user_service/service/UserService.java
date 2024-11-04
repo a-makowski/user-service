@@ -5,6 +5,7 @@ import com.makowski.user_service.exceptions.InvalidRequestException;
 import com.makowski.user_service.exceptions.NoSuchUserException;
 import com.makowski.user_service.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +29,13 @@ public class UserService {
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isPresent()) return user.get();
         else throw new NoSuchUserException();
+    }
+
+    public User getLoggedUser() {
+        return findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
+
+    public void deleteUser() {
+        userRepository.deleteById(getLoggedUser().getId());
     }
 }
