@@ -15,6 +15,7 @@ public class TokenService {
     private final Algorithm algorithm = Algorithm.HMAC512(SecurityConstants.SECRET_KEY);
 
     public String validateTokenGetUsername(String token) {
+        token = token.replace(SecurityConstants.BEARER, "");
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(token);
         return decodedJWT.getSubject();
