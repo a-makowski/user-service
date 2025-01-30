@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -60,7 +59,7 @@ class UserServiceTest {
         User createdUser = userService.createUser(user);
 
         assertEquals("encodedPassword", createdUser.getPassword());
-        Mockito.verify(userRepository).save(user);
+        verify(userRepository).save(user);
     }
 
     @Test
@@ -77,9 +76,9 @@ class UserServiceTest {
 
         when(userRepository.findByUsername("existingUser")).thenReturn(Optional.of(user));
 
-        User foundUser = userService.findByUsername("existingUser");
+        User result = userService.findByUsername("existingUser");
 
-        assertEquals(user, foundUser);
+        assertEquals(user, result);
     }
 
     @Test
@@ -114,8 +113,8 @@ class UserServiceTest {
 
         when(userRepository.findByUsername("loggedUser")).thenReturn(Optional.of(user));
 
-        User loggedUser = userService.getLoggedUser();
+        User result = userService.getLoggedUser();
 
-        assertEquals(user, loggedUser);
+        assertEquals(user, result);
     }
 }
